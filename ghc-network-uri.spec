@@ -4,6 +4,7 @@
 #
 %define		pkgname	network-uri
 Summary:	URI manipulation
+Summary(pl.UTF-8):	Operacje na URI
 Name:		ghc-%{pkgname}
 Version:	2.6.3.0
 Release:	2
@@ -14,8 +15,17 @@ Source0:	http://hackage.haskell.org/package/%{pkgname}-%{version}/%{pkgname}-%{v
 # Source0-md5:	483e55a70944e4a73d4a9ad788e7872b
 URL:		http://hackage.haskell.org/package/network-uri
 BuildRequires:	ghc >= 6.12.3
+BuildRequires:	ghc-base >= 3
+BuildRequires:	ghc-base < 5
+BuildRequires:	ghc-deepseq >= 1.1
+BuildRequires:	ghc-deepseq < 1.5
+BuildRequires:	ghc-parsec >= 3.1.12.0
+BuildRequires:	ghc-parsec < 3.2
 %if %{with prof}
 BuildRequires:	ghc-prof
+BuildRequires:	ghc-base-prof >= 3
+BuildRequires:	ghc-deepseq-prof >= 1.1
+BuildRequires:	ghc-parsec-prof >= 3.1.12.0
 %endif
 BuildRequires:	rpmbuild(macros) >= 1.608
 %requires_eq	ghc
@@ -32,6 +42,11 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 This package provides facilities for parsing and unparsing URIs,
 and creating and resolving relative URI references, closely following
 the URI spec, IETF RFC 3986.
+
+%description -l pl.UTF-8
+Ten pakiet ułatwia analizę i odtwarzanie URI oraz tworzenie i
+rozwiązywanie względnych odnośników URI, zgodnie ze specyfikacją URI,
+czyli IETF RFC 3986.
 
 %package prof
 Summary:	Profiling %{pkgname} library for GHC
@@ -89,7 +104,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc CHANGELOG.md LICENSE README.md %{name}-%{version}-doc/html
 %{_libdir}/%{ghcdir}/package.conf.d/%{pkgname}.conf
 %dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}
-%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*.so
+%attr(755,root,root) %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*.so
 %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*.a
 %exclude %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*_p.a
 
